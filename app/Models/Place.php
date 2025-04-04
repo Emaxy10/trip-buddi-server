@@ -16,4 +16,12 @@ class Place extends Model
         "address",
         "budget"
     ];
+
+    public function reviews(){
+        return $this->hasMany(Review::class);
+    }
+
+    public function favourites(){
+        return $this->hasMany(Favourite::class);
+    }
 }

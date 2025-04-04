@@ -29,6 +29,8 @@ class FavouriteController extends Controller
     public function store(Request $request)
     {
         //
+        $favourite =Favourite::create($request->all());
+        return $favourite;
     }
 
     /**

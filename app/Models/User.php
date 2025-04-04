@@ -47,4 +47,36 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function reviews(){
+        return $this->hasMany(Review::class);
+    }
+
+    public function roles()
+    {
+       return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+      //Assign user role
+    // Accepts a role ID, role name, or Role model instance
+
+    public function assignRole($role){
+        if(is_string($role)){
+            $role = Role::where('name', $role)->firstOrFail();
+        }
+        elseif(is_numeric($role)){
+            $role = Role::where('name', $role)->firstOrFail();
+         }
+         return $this->roles()->attach($role);
+    }
+    public function hasRole($role){
+        if(is_string($role)){
+            return $this->roles->contains('name', $role);
+        }
+        
+        if(is_numeric($role)){
+            return $this->roles->contains('name', $role);
+        }
+    }
+
 }
