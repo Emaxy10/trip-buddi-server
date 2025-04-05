@@ -30,6 +30,8 @@ class UserController extends Controller
             'password' => ['required', 'string']
         ]);
 
+        
+
         //Attemp user authentication
         if(!Auth::attempt($request->only('email','password'))){
 
@@ -40,11 +42,11 @@ class UserController extends Controller
         }
 
         // get client
-        $client = DB::table('oauth_clients')->where('id',1)->firstOrFail();
-        //dd($client);
+        $client = DB::table('oauth_clients')->where('id','9e9a3f5c-7b36-4aa3-bb89-4fa2f43d4c0d')->firstOrFail();
+        // dd($client);
 
         $http = new Client();
-
+    try{
         $response = $http->post('http://localhost/trip-buddy/public/oauth/token', [
 
             'json' => [
@@ -58,11 +60,12 @@ class UserController extends Controller
         ]);  
 
         return json_decode((string) $response->getBody(), true);
-
-
-       
-        
+     
    
+    }catch (\Exception $e) {
+        // Log the error or return the error response.
+        dd($e->getMessage());
     }
+}
 
 }
