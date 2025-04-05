@@ -21,9 +21,10 @@ class UpdatePlaceRequest extends FormRequest
      */
     public function rules(): array
     {
+        $placeId = $this->route('place');//Route parameter {place}
         return [
             //
-            'name' => 'required',
+            'name' => 'required|unique:places,name' . $placeId,
             'description' => 'required|min:10',
             'category' => 'required',
             'rating' => 'nullable|integer|min:1|max:5',

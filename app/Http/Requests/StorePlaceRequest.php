@@ -23,10 +23,13 @@ class StorePlaceRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required',
+            'name' => 'required|unique:places,name' ,
             'description' => 'required|min:10',
             'category' => 'required',
             'rating' => 'nullable|integer|min:1|max:5',
+            'location' => 'required',
+            'address' => 'required',
+            'budget' => 'nullable|integer',
         ];
     }
 }
