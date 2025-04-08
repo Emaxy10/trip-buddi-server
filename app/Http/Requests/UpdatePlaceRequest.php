@@ -28,7 +28,7 @@ class UpdatePlaceRequest extends FormRequest
             'description' => 'required|min:10',
             'category' => 'required',
             'rating' => 'nullable|integer|min:1|max:5',
-            'location' => 'required',
+            // 'location' => 'required',
             'address' => 'required',
             'budget' => 'nullable|integer',
         ];

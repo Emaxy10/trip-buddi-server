@@ -14,7 +14,8 @@ class Place extends Model
         "rating",
         "location",
         "address",
-        "budget"
+        "budget",
+        "image",
     ];
 
     public function reviews(){

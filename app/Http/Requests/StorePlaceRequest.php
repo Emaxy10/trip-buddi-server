@@ -27,9 +27,10 @@ class StorePlaceRequest extends FormRequest
             'description' => 'required|min:10',
             'category' => 'required',
             'rating' => 'nullable|integer|min:1|max:5',
-            'location' => 'required',
+            // 'location' => 'required',
+            'image'=>'nullable|image|max:2048',
             'address' => 'required',
-            'budget' => 'nullable|integer',
+            // 'budget' => 'nullable|integer',
         ];
     }
 }

@@ -6,6 +6,8 @@ use App\Http\Requests\StorePlaceRequest;
 use App\Http\Requests\UpdatePlaceRequest;
 use App\Models\Place;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class PlaceController extends Controller
 {
@@ -33,8 +35,42 @@ class PlaceController extends Controller
     public function store(StorePlaceRequest $request)
     {
         //
-        $place = Place::create($request->all());
-        return $place;
+       
+        // $place = Place::create($request->all());
+        // return $place;
+        $image = $request->file("image");
+
+        $folderName = Str::random(24); // Generates a 24-character random string
+        
+        $folderPath = public_path("images/$folderName");
+
+          // Check if the folder doesn't exist, then create it
+        if (!File::exists($folderPath)) {
+            File::makeDirectory($folderPath, 0755, true); // 0755 = permission, true = recursive creation
+        }
+
+        // Get original filename
+        $filename = $image->getClientOriginalName();
+
+        // Move the image to the new folder
+        $image->move($folderPath, $filename);
+        $place = new Place();
+
+        $path = "images/$folderName/$filename";
+
+        // dd($path);
+
+       $place->create([
+            "name"=> $request->input('name'),
+            "description" => $request->input("description"),
+            "category" => $request->input("category"),
+            "rating" => $request->input("rating"),
+            "address" => $request->input("address"),
+            "image" => $path
+        ]);
+
+
+
     }
 
     /**
