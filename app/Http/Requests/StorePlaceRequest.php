@@ -28,7 +28,7 @@ class StorePlaceRequest extends FormRequest
             'category' => 'required',
             'rating' => 'nullable|integer|min:1|max:5',
             // 'location' => 'required',
-            'image'=>'nullable|image|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'address' => 'required',
             // 'budget' => 'nullable|integer',
         ];
