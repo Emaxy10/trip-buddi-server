@@ -18,7 +18,17 @@ class PlaceController extends Controller
     {
         //
         $places = Place::all();
-        return $places;
+        $placesData = $places->map(function ($place) {
+            return [
+                "id"=> $place->id,
+                "name"=> $place->name,
+                "category" => $place->category,
+                "description" => $place->description,
+                "image" => asset("images/" . $place->image),
+            ];
+        });
+       
+        return response()->json($placesData);
     }
 
     /**
@@ -56,7 +66,7 @@ class PlaceController extends Controller
         $image->move($folderPath, $filename);
         $place = new Place();
 
-        $path = "images/$folderName/$filename";
+        $path = "$folderName/$filename";
 
         // dd($path);
 

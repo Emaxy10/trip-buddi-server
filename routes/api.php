@@ -18,9 +18,7 @@ Route::post('/login', [UserController::class,'login']);
 
 // PLACES
 Route::get('/places', [PlaceController::class,'index']);
-Route::post('/places', [PlaceController::class,'store']);
-
-// ->middleware('auth:api')->middleware('role:admin');
+Route::post('/places', [PlaceController::class,'store'])->middleware('auth:api')->middleware('role:admin');
 
 Route::put('/places/{place}', [PlaceController::class,'update']);
 Route::delete('/places/{place}', [PlaceController::class,'destroy']);
