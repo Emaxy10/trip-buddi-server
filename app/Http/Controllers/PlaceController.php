@@ -89,6 +89,7 @@ class PlaceController extends Controller
     public function show(Place $place)
     {
         //
+        return response()->json($place);
     }
 
     /**
@@ -109,6 +110,7 @@ class PlaceController extends Controller
             "name"=> $request->input("name"),
             "description"=> $request->input("description"),
             "category"=> $request->input("category"),
+            "address" => $request->input("address")
          ]);
 
          return response()->json([
