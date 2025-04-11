@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePlaceRequest extends FormRequest
 {
@@ -21,15 +22,17 @@ class UpdatePlaceRequest extends FormRequest
      */
     public function rules(): array
     {
-        $placeId = $this->route('place');//Route parameter {place}
+        $placeId = $this->route('place'); // Route parameter {place}
+
         return [
-            //
-            'name' => 'required|unique:places,name' . $placeId,
+            'name' => [
+                'required',
+                Rule::unique('places', 'name')->ignore($placeId),
+            ],
             'description' => 'required|min:10',
             'category' => 'required',
             'rating' => 'nullable|integer|min:1|max:5',
-            // 'location' => 'required',
-            'address' => 'required',
+            'address' => 'nullable|min:5',
             'budget' => 'nullable|integer',
         ];
     }

@@ -105,7 +105,11 @@ class PlaceController extends Controller
     public function update(UpdatePlaceRequest $request, Place $place)
     {
         //
-         $place->update($request->all());
+         $place->update([
+            "name"=> $request->input("name"),
+            "description"=> $request->input("description"),
+            "category"=> $request->input("category"),
+         ]);
 
          return response()->json([
             'message' => 'Place updated successfully',

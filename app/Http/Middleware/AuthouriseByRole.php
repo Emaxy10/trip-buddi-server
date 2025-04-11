@@ -25,6 +25,9 @@ class AuthouriseByRole
         if (!$user->hasRole($role)) {
             return response()->json(['error' => 'User does not have role']);
         }
+
+         // Attach the role to the request
+        $request->attributes->set('role', $role);
         return $next($request);
     }
 }
