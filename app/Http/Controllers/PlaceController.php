@@ -89,7 +89,15 @@ class PlaceController extends Controller
     public function show(Place $place)
     {
         //
-        return response()->json($place);
+        return response()->json([
+            "id"=> $place->id,
+            "name"=> $place->name,
+            "category" => $place->category,
+            "description" => $place->description,
+            "address" => $place->address,
+            "rating" => $place->rating,
+            "image" => asset("images/" . $place->image),
+        ]);
     }
 
     /**

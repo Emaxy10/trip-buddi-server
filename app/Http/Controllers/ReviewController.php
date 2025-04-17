@@ -32,6 +32,11 @@ class ReviewController extends Controller
         //
        $review = Review::create($request->all());
        return $review;
+    // $place_id = $request->place_id;
+    // $review = new Review();
+
+    // $average = $review->averageRating($place_id);
+    // echo $average;
     }
 
     /**
@@ -64,5 +69,15 @@ class ReviewController extends Controller
     public function destroy(Review $review)
     {
         //
+    }
+    public function rating($place){
+        $review = new Review();
+
+        $rating = $review->averageRating($place);
+
+        return  response()->json([
+            "rating" => $rating,
+        ]);
+      
     }
 }

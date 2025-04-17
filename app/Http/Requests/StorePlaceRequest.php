@@ -26,7 +26,7 @@ class StorePlaceRequest extends FormRequest
             'name' => 'required|unique:places,name' ,
             'description' => 'required|min:10',
             'category' => 'required',
-            'rating' => 'nullable|integer|min:1|max:5',
+            'rating' => 'nullable|min:1|max:5',
             // 'location' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'address' => 'required',

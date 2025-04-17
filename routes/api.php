@@ -19,10 +19,14 @@ Route::post('/login', [UserController::class,'login']);
 // PLACES
 Route::get('/places', [PlaceController::class,'index']);
 Route::get('/places/{place}', [PlaceController::class,'show']);
-Route::post('/places', [PlaceController::class,'store'])->middleware('auth:api')->middleware('role:admin');
+Route::post('/places', [PlaceController::class,'store']);
+// ->middleware('auth:api')->middleware('role:admin'); 
 
-Route::put('/places/{place}', [PlaceController::class,'update'])->middleware('auth:api')->middleware('role:admin')->middleware('permission:update place');
+Route::put('/places/{place}', [PlaceController::class,'update']);
+// ->middleware('auth:api')->middleware('role:admin')->middleware('permission:update place');
 Route::delete('/places/{place}', [PlaceController::class,'destroy']);
 
 //Review
 Route::post('/review', [ReviewController::class,'store']);
+
+Route::get('/places/{place}/rating', [ReviewController::class,'rating']);

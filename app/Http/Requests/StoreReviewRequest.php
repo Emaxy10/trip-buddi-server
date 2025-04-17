@@ -30,7 +30,7 @@ class StoreReviewRequest extends FormRequest
 
             'user_id' => 'required|integer|exists:users,id',
             'place_id' => 'required|integer|exists:places,id',
-            'rating' => 'required|integer|min:1|max:5',
+            'rating' => 'nullable|min:1|max:5',
             'comment' => 'required|string|max:1000',
         ];
     }
