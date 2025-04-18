@@ -20,6 +20,7 @@ Route::post('/login', [UserController::class,'login']);
 Route::get('/places', [PlaceController::class,'index']);
 Route::get('/places/{place}', [PlaceController::class,'show']);
 Route::post('/places', [PlaceController::class,'store']);
+Route::get('/places/{place}/review', [PlaceController::class,'review']);
 // ->middleware('auth:api')->middleware('role:admin'); 
 
 Route::put('/places/{place}', [PlaceController::class,'update']);
@@ -29,4 +30,5 @@ Route::delete('/places/{place}', [PlaceController::class,'destroy']);
 //Review
 Route::post('/review', [ReviewController::class,'store']);
 
+//Rating
 Route::get('/places/{place}/rating', [ReviewController::class,'rating']);

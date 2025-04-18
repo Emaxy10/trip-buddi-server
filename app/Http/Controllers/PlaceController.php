@@ -135,4 +135,13 @@ class PlaceController extends Controller
         //
         $place->delete();
     }
+
+    public function review(Place $place){
+        $reviews = [];
+       $placeReviews= $place->reviews;
+
+       
+      
+       return response()->json( $placeReviews);
+    }
 }
