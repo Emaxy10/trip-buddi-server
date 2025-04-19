@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePlaceRequest;
 use App\Http\Requests\UpdatePlaceRequest;
 use App\Models\Place;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
@@ -98,6 +99,9 @@ class PlaceController extends Controller
             "rating" => $place->rating,
             "image" => asset("images/" . $place->image),
         ]);
+
+        //  get object and its relationship
+        //  $placeReviews= Place::with('reviews.user')->find($place);
     }
 
     /**
@@ -137,11 +141,7 @@ class PlaceController extends Controller
     }
 
     public function review(Place $place){
-        $reviews = [];
        $placeReviews= $place->reviews;
-
-       
-      
        return response()->json( $placeReviews);
     }
 }
