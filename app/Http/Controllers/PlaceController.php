@@ -141,7 +141,7 @@ class PlaceController extends Controller
     }
 
     public function review(Place $place){
-       $placeReviews= $place->reviews;
+       $placeReviews= $place->reviews()->with('user')->get();
        return response()->json( $placeReviews);
     }
 }
