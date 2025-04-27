@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AuthouriseByRole;
 use App\Http\Middleware\AuthouriseRoleByPermission;
+use App\Http\Middleware\EnsureTokenIsValid;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -21,7 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
          // Register route middleware with alias
          $middleware->alias([
             'role' => AuthouriseByRole::class,
-            'permission' => AuthouriseRoleByPermission::class
+            'permission' => AuthouriseRoleByPermission::class,
+            'ensure.valid.access.token' => EnsureTokenIsValid::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

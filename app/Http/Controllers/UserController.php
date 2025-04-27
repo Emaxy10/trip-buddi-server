@@ -41,6 +41,10 @@ class UserController extends Controller
 
         }
 
+        // Get the authenticated user
+    /** @var \App\Models\User $user */
+        $user = Auth::user();
+
         // get client
         $client = DB::table('oauth_clients')->where('id','9e9a3f5c-7b36-4aa3-bb89-4fa2f43d4c0d')->firstOrFail();
         // dd($client);
@@ -49,7 +53,7 @@ class UserController extends Controller
     try{
         $response = $http->post('http://localhost/trip-buddy/public/oauth/token', [
 
-            'json' => [
+            'form_params' => [
                 'grant_type' => 'password',
                 'client_id' => $client->id,
                 'client_secret' => $client->secret,
@@ -58,6 +62,15 @@ class UserController extends Controller
                 'scope' => '',
             ]
         ]);  
+
+     $tokenData = json_decode((string) $response->getBody(), true);
+
+
+    // (Optional) update tokens in the user table
+    $user->update([
+        'access_token' => $tokenData['access_token'],
+        'refresh_token' => $tokenData['refresh_token'],
+    ]);
 
         return json_decode((string) $response->getBody(), true);
      

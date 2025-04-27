@@ -17,7 +17,9 @@ Route::post('/login', [UserController::class,'login']);
 
 
 // PLACES
-Route::get('/places', [PlaceController::class,'index']);
+Route::get('/places', [PlaceController::class,'index'])->middleware('auth:api')
+->middleware('ensure.valid.access.token');
+
 Route::get('/places/{place}', [PlaceController::class,'show']);
 Route::post('/places', [PlaceController::class,'store']);
 Route::get('/places/{place}/review', [PlaceController::class,'review']);
