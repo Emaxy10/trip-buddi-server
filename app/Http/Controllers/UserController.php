@@ -72,7 +72,13 @@ class UserController extends Controller
         'refresh_token' => $tokenData['refresh_token'],
     ]);
 
-        return json_decode((string) $response->getBody(), true);
+    return response()->json([
+        'user' => $user,
+        'access_token' => $tokenData['access_token'],
+        'refresh_token' => $tokenData['refresh_token'],
+        'token_type' => $tokenData['token_type'],
+        'expires_in' => $tokenData['expires_in'],
+    ]);
      
    
     }catch (\Exception $e) {
