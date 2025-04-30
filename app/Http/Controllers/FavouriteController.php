@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFavouriteRequest;
 use App\Models\Favourite;
+use App\Models\Place;
 use Illuminate\Http\Request;
 
 class FavouriteController extends Controller
@@ -26,11 +28,16 @@ class FavouriteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store( StoreFavouriteRequest $request)
     {
         //
-        $favourite =Favourite::create($request->all());
-        return $favourite;
+        $favourite = new Favourite();
+
+       return 
+        $favourite->create([
+            "user_id" => $request->input('user_id'),
+            "place_id" => $request->input('place_id'),
+        ]);
     }
 
     /**

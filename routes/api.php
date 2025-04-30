@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
@@ -17,8 +18,9 @@ Route::post('/login', [UserController::class,'login']);
 
 
 // PLACES
-Route::get('/places', [PlaceController::class,'index'])->middleware('auth:api')
-->middleware('ensure.valid.access.token');
+Route::get('/places', [PlaceController::class,'index']);
+// ->middleware('auth:api')
+// ->middleware('ensure.valid.access.token');
 
 Route::get('/places/{place}', [PlaceController::class,'show']);
 Route::post('/places', [PlaceController::class,'store']);
@@ -34,3 +36,6 @@ Route::post('/review', [ReviewController::class,'store']);
 
 //Rating
 Route::get('/places/{place}/rating', [ReviewController::class,'rating']);
+
+//Favourites
+Route::post('/places/favourite', [FavouriteController::class, 'store']);
