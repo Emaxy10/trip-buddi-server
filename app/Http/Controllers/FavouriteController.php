@@ -32,12 +32,28 @@ class FavouriteController extends Controller
     {
         //
         $favourite = new Favourite();
+        $user_id =  $request->input('user_id');
+        $place_id = $request->input('place_id');
 
-       return 
-        $favourite->create([
-            "user_id" => $request->input('user_id'),
-            "place_id" => $request->input('place_id'),
-        ]);
+        $fav = $favourite->where('user_id', $user_id)
+                       ->where('place_id', $place_id)->first();
+
+        if( $fav === null){
+            
+            return 
+                $favourite->create([
+                    "user_id" => $request->input('user_id'),
+                    "place_id" => $request->input('place_id'),
+                ]);
+        }else{
+            return response()->json(['message' => 'Already a favourite'], 200);
+        }
+
+    //    return 
+    //     $favourite->create([
+    //         "user_id" => $request->input('user_id'),
+    //         "place_id" => $request->input('place_id'),
+    //     ]);
     }
 
     /**
