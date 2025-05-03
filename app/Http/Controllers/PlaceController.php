@@ -144,4 +144,29 @@ class PlaceController extends Controller
        $placeReviews= $place->reviews()->with('user')->get();
        return response()->json( $placeReviews);
     }
+
+    public function search($search){
+
+        $places = Place::where('name', 'like', "%{$search}%")
+        ->orWhere('category', 'like', "%{$search}%")
+        ->orWhere('address', 'like', "%{$search}%" )
+        ->get()
+        ->map(function($place){
+            return [
+                "id" => $place->id,                         // Extracting the 'id' from each place
+                "name" => $place->name,                     // Extracting the 'name' from each place
+                "category" => $place->category,             // Extracting the 'category'
+                "description" => $place->description,       // Extracting the 'description'
+                "address" => $place->address,               // Extracting the 'address'
+                "rating" => $place->rating,                 // Extracting the 'rating'
+                "image" => asset("images/" . $place->image), // Adding the 'asset' URL to the 'image' path
+            ];
+        });
+
+        // map() function is used to transform each item in a collection. 
+        // In his case, it's being used to iterate through each $place object, 
+        // extract specific properties, and apply transformations (such as adding the asset URL for the image).
+
+        return response()->json($places);
+    }
 }

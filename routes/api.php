@@ -39,3 +39,6 @@ Route::get('/places/{place}/rating', [ReviewController::class,'rating']);
 
 //Favourites
 Route::post('/places/favourite', [FavouriteController::class, 'store']);
+
+//Search
+Route::get('/places/search/{search}', [PlaceController::class, 'search']);
