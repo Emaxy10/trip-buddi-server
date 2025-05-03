@@ -25,6 +25,7 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
+        
         $request->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string']
@@ -72,8 +73,12 @@ class UserController extends Controller
         'refresh_token' => $tokenData['refresh_token'],
     ]);
 
+    $user_roles = $user->roles;
+    //dd($user->roles);
+
     return response()->json([
         'user' => $user,
+        
         'access_token' => $tokenData['access_token'],
         'refresh_token' => $tokenData['refresh_token'],
         'token_type' => $tokenData['token_type'],

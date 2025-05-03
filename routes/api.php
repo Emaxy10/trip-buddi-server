@@ -27,8 +27,11 @@ Route::post('/places', [PlaceController::class,'store']);
 Route::get('/places/{place}/review', [PlaceController::class,'review']);
 // ->middleware('auth:api')->middleware('role:admin'); 
 
-Route::put('/places/{place}', [PlaceController::class,'update']);
-// ->middleware('auth:api')->middleware('role:admin')->middleware('permission:update place');
+//Update
+Route::put('/places/{place}', [PlaceController::class,'update'])
+    ->middleware('auth:api')
+    ->middleware('ensure.valid.access.token');
+// ->middleware('role:admin')->middleware('permission:update place');
 Route::delete('/places/{place}', [PlaceController::class,'destroy']);
 
 //Review
