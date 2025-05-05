@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ReviewController extends Controller
 {
@@ -42,9 +43,12 @@ class ReviewController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Review $review)
+    public function show(User $user)
     {
         //
+
+        $user_reviews = $user->reviews()->with('place')->get();
+        return response()->json($user_reviews);
     }
 
     /**

@@ -36,12 +36,14 @@ Route::delete('/places/{place}', [PlaceController::class,'destroy']);
 
 //Review
 Route::post('/review', [ReviewController::class,'store']);
+Route::get('/places/{user}/reviews', [ReviewController::class,'show']);
 
 //Rating
 Route::get('/places/{place}/rating', [ReviewController::class,'rating']);
 
 //Favourites
 Route::post('/places/favourite', [FavouriteController::class, 'store']);
+Route::get('/places/{user}/favourite', [FavouriteController::class, 'show']);
 
 //Search
 Route::get('/places/search/{search}', [PlaceController::class, 'search']);

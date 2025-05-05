@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFavouriteRequest;
 use App\Models\Favourite;
 use App\Models\Place;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FavouriteController extends Controller
 {
@@ -59,11 +61,26 @@ class FavouriteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Favourite $favourite)
+    public function show(User $user)
     {
         //
+        $user_favourites = $user->favourites()->with('place')->get();
+        $places = $user_favourites->map(function ($favourite) {
+            $place = $favourite->place;
+        
+            return [
+                "id" => $place->id,
+                "name" => $place->name,
+                "category" => $place->category,
+                "description" => $place->description,
+                "address" => $place->address,
+                "rating" => $place->rating,
+                "image" => asset("images/" . $place->image),
+            ];
+        });
+        
+        return response()->json($places);
     }
-
     /**
      * Show the form for editing the specified resource.
      */
