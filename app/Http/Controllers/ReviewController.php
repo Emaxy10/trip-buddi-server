@@ -47,8 +47,12 @@ class ReviewController extends Controller
     {
         //
 
-        $user_reviews = $user->reviews()->with('place')->get();
-        return response()->json($user_reviews);
+        $user_reviews = $user->reviews()
+        ->whereHas('place') // Only include reviews with an existing place
+        ->with('place')     // Eager-load place details
+        ->get();
+
+    return response()->json($user_reviews);
     }
 
     /**

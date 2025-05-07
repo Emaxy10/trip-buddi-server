@@ -137,7 +137,7 @@ class PlaceController extends Controller
     public function destroy(Place $place)
     {
         //
-        $place->delete();
+       return  $place->delete();
     }
 
     public function review(Place $place){

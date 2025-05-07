@@ -21,6 +21,8 @@ Route::post('/login', [UserController::class,'login']);
 Route::get('/places', [PlaceController::class,'index']);
 // ->middleware('auth:api')
 // ->middleware('ensure.valid.access.token');
+//DELETE
+Route::delete('places/{place}',[PlaceController::class,'delete']);
 
 Route::get('/places/{place}', [PlaceController::class,'show']);
 Route::post('/places', [PlaceController::class,'store']);
