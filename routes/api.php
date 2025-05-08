@@ -12,9 +12,10 @@ use Illuminate\Support\Str;
 
 
 
-
+//USER
 Route::post('/register', [UserController::class,'register']);
 Route::post('/login', [UserController::class,'login']);
+Route::get('/users',[UserController::class, 'index']);
 
 
 // PLACES

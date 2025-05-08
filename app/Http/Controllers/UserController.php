@@ -15,9 +15,19 @@ class UserController extends Controller
 {
     //
     public function index(){
-        $users = User::all();
+        $users = User::with('roles')->get();
+
+          // Transform the collection
+    $mappedUsers = $users->map(function($user) {
+        return [
+            "id" => $user->id,
+            "name" => $user->name,
+            "email"=>$user->email,
+            "roles" => $user->roles->pluck('name') // Assuming each role has a 'name' field
+        ];
+    });
         
-        return $users;
+        return response()->json($mappedUsers);
     }
     public function register(StoreUserRequest $request){
         $user = User::create($request->all());
