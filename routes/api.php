@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 Route::post('/register', [UserController::class,'register']);
 Route::post('/login', [UserController::class,'login']);
 Route::get('/users',[UserController::class, 'index']);
+Route::delete('users/{user}', [UserController::class, 'remove']);
 
 
 // PLACES

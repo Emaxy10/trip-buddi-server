@@ -102,4 +102,8 @@ class UserController extends Controller
     }
 }
 
+public function remove(User $user){
+    $user->delete();
+}
+
 }
