@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use App\Models\Role;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
@@ -103,7 +104,17 @@ class UserController extends Controller
 }
 
 public function remove(User $user){
-    $user->delete();
+    return $user->delete();
+}
+
+public function assign_role(User $user, Request $request){
+    $role = $request->input('role');
+    return $user->assignRole($role);
+
+    // $roleId = $request->input('role');
+    // $role = Role::findOrFail($roleId); // Throws 404 if not found
+    // return $user->assignRole($role);
+
 }
 
 }

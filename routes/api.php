@@ -18,6 +18,9 @@ Route::post('/login', [UserController::class,'login']);
 Route::get('/users',[UserController::class, 'index']);
 Route::delete('users/{user}', [UserController::class, 'remove']);
 
+//roles
+Route::post('/users/role/assign/{user}', [UserController::class, 'assign_role']);
+
 
 // PLACES
 Route::get('/places', [PlaceController::class,'index']);

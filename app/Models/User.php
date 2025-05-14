@@ -67,9 +67,9 @@ class User extends Authenticatable
             $role = Role::where('name', $role)->firstOrFail();
         }
         elseif(is_numeric($role)){
-            $role = Role::where('name', $role)->firstOrFail();
+            $role = Role::findOrFail($role);
          }
-         return $this->roles()->attach($role);
+         $this->roles()->syncWithoutDetaching([$role->id]);
     }
     public function hasRole($role){
         if(is_string($role)){
