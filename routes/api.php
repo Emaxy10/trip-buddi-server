@@ -3,6 +3,7 @@
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthouriseByRole;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::delete('users/{user}', [UserController::class, 'remove']);
 
 //roles
 Route::post('/users/role/assign/{user}', [UserController::class, 'assign_role']);
+Route::get('/roles', [RoleController::class, 'index']);
 
 
 // PLACES
