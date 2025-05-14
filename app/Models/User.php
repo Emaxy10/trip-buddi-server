@@ -69,7 +69,7 @@ class User extends Authenticatable
         elseif(is_numeric($role)){
             $role = Role::findOrFail($role);
          }
-         $this->roles()->syncWithoutDetaching([$role->id]);
+         return $this->roles()->syncWithoutDetaching([$role->id]);
     }
     public function hasRole($role){
         if(is_string($role)){
