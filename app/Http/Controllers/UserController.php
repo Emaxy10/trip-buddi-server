@@ -24,7 +24,13 @@ class UserController extends Controller
             "id" => $user->id,
             "name" => $user->name,
             "email"=>$user->email,
-            "roles" => $user->roles->pluck('name') // Assuming each role has a 'name' field
+            // "roles" => $user->roles->pluck('name') // Assuming each role has a 'name' field
+            "roles" => $user->roles->map(function($role){
+                return [
+                    "id" => $role->id,
+                    "name" => $role->name
+                ];
+            })
         ];
     });
         
@@ -108,13 +114,26 @@ public function remove(User $user){
 }
 
 public function assign_role(User $user, Request $request){
-    $role = $request->input('role');
-    return $user->assignRole($role);
+    $validated = $request->validate([
+        'role' => 'required|exists:roles,id'
+    ]);
+
+    
+    return $user->assignRole($validated['role']);
 
     // $roleId = $request->input('role');
     // $role = Role::findOrFail($roleId); // Throws 404 if not found
     // return $user->assignRole($role);
 
+}
+
+public function remove_role(User $user, Request $request){
+   
+    $validated = $request->validate([
+        'role' => 'required'
+    ]);
+
+    return $user->removeRole($validated['role']);
 }
 
 }

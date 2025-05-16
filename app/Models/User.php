@@ -71,6 +71,10 @@ class User extends Authenticatable
          }
          return $this->roles()->syncWithoutDetaching([$role->id]);
     }
+
+    public function removeRole($role){
+        return $this->roles()->detach($role);
+    }
     public function hasRole($role){
         if(is_string($role)){
             return $this->roles->contains('name', $role);
