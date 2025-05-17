@@ -4,6 +4,7 @@ use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TripController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthouriseByRole;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,9 @@ Route::post('/users/role/assign/{user}', [UserController::class, 'assign_role'])
 //roles
 
 Route::get('/roles', [RoleController::class, 'index']);
+
+//TRIPS
+Route::post('/trips', [TripController::class, 'store']);
 
 
 
