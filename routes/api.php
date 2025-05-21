@@ -21,6 +21,7 @@ Route::get('/users',[UserController::class, 'index']);
 Route::delete('/users/{user}', [UserController::class, 'remove']);
 Route::delete('/users/role/remove/{user}', [UserController::class, 'remove_role']);
 Route::post('/users/role/assign/{user}', [UserController::class, 'assign_role']);
+Route::get('/users/search/{search}', [UserController::class, 'search']);
 
 //roles
 

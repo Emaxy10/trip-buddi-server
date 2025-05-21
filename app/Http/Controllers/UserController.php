@@ -135,5 +135,34 @@ public function remove_role(User $user, Request $request){
 
     return $user->removeRole($validated['role']);
 }
+public function search($search){
+
+    $users = User::where('name', 'like', "%{$search}%")
+    ->orWhere('email', 'like', "%{$search}%")
+    ->orWhereHas('roles', function($queri) use($search){
+        $queri->where('name', 'like', "%{$search}%");
+    })
+    ->with('roles')
+    ->get()
+    ->map(function($user){
+        return [
+            "id" => $user->id,
+            "name" => $user->name,
+            "email" => $user->email,
+            "roles" =>  $user->roles->map(function($role){
+                return [
+                    "id" => $role->id,
+                    "name" => $role->name
+                ];
+            })
+        ];
+    });
+
+    // map() function is used to transform each item in a collection. 
+    // In his case, it's being used to iterate through each $place object, 
+    // extract specific properties, and apply transformations (such as adding the asset URL for the image).
+
+    return response()->json($users);
+}
 
 }
