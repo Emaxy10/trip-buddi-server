@@ -13,6 +13,9 @@ class Trip extends Model
         "destination",
         "start_date",
         "end_date",
-        "passenger"
+        "passenger",
+        "place_id",
+        "trip_id"
+
     ];
 }

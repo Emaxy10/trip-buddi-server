@@ -28,7 +28,7 @@ Route::get('/users/search/{search}', [UserController::class, 'search']);
 Route::get('/roles', [RoleController::class, 'index']);
 
 //TRIPS
-Route::post('/trips', [TripController::class, 'store']);
+Route::post('/trips/book', [TripController::class, 'store']);
 
 
 
