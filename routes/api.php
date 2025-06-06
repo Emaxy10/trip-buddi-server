@@ -16,16 +16,26 @@ use Illuminate\Support\Str;
 
 //USER
 Route::post('/register', [UserController::class,'register']);
+
 Route::post('/login', [UserController::class,'login']);
-Route::get('/users',[UserController::class, 'index']);
-Route::delete('/users/{user}', [UserController::class, 'remove']);
-Route::delete('/users/role/remove/{user}', [UserController::class, 'remove_role']);
-Route::post('/users/role/assign/{user}', [UserController::class, 'assign_role']);
-Route::get('/users/search/{search}', [UserController::class, 'search']);
 
-//roles
+Route::middleware(['auth:api','admin-rights', 'role:admin'])->group(function() {
 
-Route::get('/roles', [RoleController::class, 'index']);
+    Route::get('/users',[UserController::class, 'index']);
+
+    Route::delete('/users/{user}', [UserController::class, 'remove']);
+
+    Route::delete('/users/role/remove/{user}', [UserController::class, 'remove_role']);
+
+    Route::post('/users/role/assign/{user}', [UserController::class, 'assign_role']);
+
+    Route::get('/users/search/{search}', [UserController::class, 'search']);
+
+    //roles
+
+    Route::get('/roles', [RoleController::class, 'index']);
+});
+
 
 //TRIPS
 Route::post('/trips/book', [TripController::class, 'store']);

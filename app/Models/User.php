@@ -75,14 +75,21 @@ class User extends Authenticatable
     public function removeRole($role){
         return $this->roles()->detach($role);
     }
-    public function hasRole($role){
-        if(is_string($role)){
-            return $this->roles->contains('name', $role);
+    public function hasRole($roles){
+
+        if (is_array($roles)) {
+            return $this->roles->pluck('name')->intersect($roles)->isNotEmpty();
+        }
+
+        if(is_string($roles)){
+            return $this->roles->contains('name', $roles);
         }
         
-        if(is_numeric($role)){
-            return $this->roles->contains('name', $role);
+        if(is_numeric($roles)){
+            return $this->roles->contains('name', $roles);
         }
+
+        return false;
     }
 
     public function favourites(){

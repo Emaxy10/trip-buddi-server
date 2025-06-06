@@ -25,6 +25,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => AuthouriseRoleByPermission::class,
             'ensure.valid.access.token' => EnsureTokenIsValid::class,
         ]);
+
+        $middleware->appendToGroup('admin-rights', [
+            'ensure.valid.access.token'
+
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
