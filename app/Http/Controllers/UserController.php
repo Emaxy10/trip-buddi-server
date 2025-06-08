@@ -90,8 +90,7 @@ class UserController extends Controller
         'refresh_token' => $tokenData['refresh_token'],
     ]);
 
-    // $user_roles = $user->roles;
-    //dd($user->roles);
+     $user_roles = $user->roles;
 
     return response()->json([
         'user' => $user,

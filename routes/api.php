@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthouriseByRole;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Str;
 
 
@@ -19,7 +20,7 @@ Route::post('/register', [UserController::class,'register']);
 
 Route::post('/login', [UserController::class,'login']);
 
-Route::middleware(['auth:api','admin-rights', 'role:admin'])->group(function() {
+Route::middleware(['auth:api','ensure.valid.access.token', 'role:admin'])->group(function() {
 
     Route::get('/users',[UserController::class, 'index']);
 
@@ -34,42 +35,56 @@ Route::middleware(['auth:api','admin-rights', 'role:admin'])->group(function() {
     //roles
 
     Route::get('/roles', [RoleController::class, 'index']);
+
+    // //delete
+    Route::delete('/places/{place}', [PlaceController::class,'destroy'])->middleware('permission:delete place');
 });
 
+
+Route::middleware(['auth:api', 'role:admin,manager', 'ensure.valid.access.token'])->group( function() {
+
+    //create 
+    Route::post('/places', [PlaceController::class,'store'])->middleware('permission:create place');
+
+    //Update
+    Route::put('/places/{place}', [PlaceController::class,'update'])->middleware('permission:update place');
+
+});
 
 //TRIPS
 Route::post('/trips/book', [TripController::class, 'store']);
 
-
+Route::middleware(['auth.api', 'ensure.valid.access.token'])->group( function(){
+    Route::post('/review', [ReviewController::class,'store']);
+    Route::post('/places/favourite', [FavouriteController::class, 'store']);
+});
 
 // PLACES
 Route::get('/places', [PlaceController::class,'index']);
-// ->middleware('auth:api')
-// ->middleware('ensure.valid.access.token');
+
 //DELETE
-Route::delete('places/{place}',[PlaceController::class,'delete']);
+// Route::delete('places/{place}',[PlaceController::class,'delete']);
 
 Route::get('/places/{place}', [PlaceController::class,'show']);
-Route::post('/places', [PlaceController::class,'store']);
+
 Route::get('/places/{place}/review', [PlaceController::class,'review']);
 // ->middleware('auth:api')->middleware('role:admin'); 
 
-//Update
-Route::put('/places/{place}', [PlaceController::class,'update'])
-    ->middleware('auth:api')
-    ->middleware('ensure.valid.access.token');
+
+    // ->middleware('auth:api')
+    // ->middleware('ensure.valid.access.token');
 // ->middleware('role:admin')->middleware('permission:update place');
-Route::delete('/places/{place}', [PlaceController::class,'destroy']);
+
 
 //Review
-Route::post('/review', [ReviewController::class,'store']);
+
 Route::get('/places/{user}/reviews', [ReviewController::class,'show']);
 
 //Rating
 Route::get('/places/{place}/rating', [ReviewController::class,'rating']);
 
 //Favourites
-Route::post('/places/favourite', [FavouriteController::class, 'store']);
+
 Route::get('/places/{user}/favourite', [FavouriteController::class, 'show']);
 
 //Search
