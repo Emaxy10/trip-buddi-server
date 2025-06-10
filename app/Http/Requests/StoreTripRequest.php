@@ -22,10 +22,13 @@ class StoreTripRequest extends FormRequest
     public function rules(): array
     {
         return [
+            
+            'user_id'=> 'nullable|integer|exists:users,id',
             'destination' => 'required|string|max:255',
             'passenger' => 'required|array|min:1',
             'start_date' => 'required|date|before_or_equal:end_date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'place_id' => 'required|integer|exists:places,id',
         ];
     }
 }

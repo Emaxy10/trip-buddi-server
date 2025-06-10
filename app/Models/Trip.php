@@ -13,9 +13,15 @@ class Trip extends Model
         "destination",
         "start_date",
         "end_date",
-        "passenger",
+        "passenger_name",
         "place_id",
-        "trip_id"
+        "trip_id",
+        "user_id"
 
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

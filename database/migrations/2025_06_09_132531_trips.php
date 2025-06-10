@@ -12,13 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::create('trips', function (Blueprint $table){
-            $table->id();
+
+        Schema::create('trips', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('place_id');
             $table->string('destination');
-            $table->string('passenger');
+            $table->string('passenger_name');
             $table->date('start_date');
             $table->date('end_date');
-            // trip code, destination, start date, end date, passenger
+        
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
         });
     }
 

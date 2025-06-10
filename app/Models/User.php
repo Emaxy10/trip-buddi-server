@@ -96,4 +96,9 @@ class User extends Authenticatable
         return $this->hasMany(Favourite::class);
     }
 
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
+    }
+
 }
