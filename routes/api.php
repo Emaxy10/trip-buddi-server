@@ -54,9 +54,12 @@ Route::middleware(['auth:api', 'role:admin,manager', 'ensure.valid.access.token'
 //TRIPS
 Route::post('/trips/book', [TripController::class, 'store']);
 
-Route::middleware(['auth.api', 'ensure.valid.access.token'])->group( function(){
+Route::middleware(['auth:api', 'ensure.valid.access.token'])->group( function(){
+
     Route::post('/review', [ReviewController::class,'store']);
     Route::post('/places/favourite', [FavouriteController::class, 'store']);
+    Route::get('/trips/user/{user}', [TripController::class, 'get_trip']);
+
 });
 
 // PLACES

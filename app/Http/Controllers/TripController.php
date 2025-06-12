@@ -106,7 +106,38 @@ class TripController extends Controller
 
     public function get_trip(User $user){
         
-        $trips = $user->trips;
+        $trips = $user->trips()->with('place')->get();
+
+        foreach( $trips as $trip){
+           // dump($trip['passenger_name']);
+        }
+
+
+
+        $formattedTrips = $trips->map(function ($trip) {
+            return [
+                "user_id" => $trip->user_id,
+                "place_id" => $trip->place_id,
+                "destination" => $trip->destination,
+                "passenger_name" => $trip->passenger_name,
+                "start_date" => $trip->start_date,
+                "end_date" => $trip->end_date,
+                "place" => $trip->place ? [
+                    "id" => $trip->place->id,
+                    "name" => $trip->place->name,
+                    "category" => $trip->place->category,
+                    "description" => $trip->place->description,
+                    "address" => $trip->place->address,
+                    "rating" => $trip->place->rating,
+                    "image" => asset("images/" . $trip->place->image),
+                ] : null,
+            ];
+        });
+    
+
+        return response()->json([
+            'trips' =>  $formattedTrips
+        ]);
 
     }
 }
